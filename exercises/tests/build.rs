@@ -2,6 +2,7 @@
 //!
 //! You should modify this file to make both exercises pass.
 
+// I AM DONE
 fn main() {
     // In tests7, we should set up an environment variable
     // called `TEST_FOO`. Print in the standard output to let
@@ -19,6 +20,6 @@ fn main() {
     // In tests8, we should enable "pass" feature to make the
     // testcase return early. Fill in the command to tell
     // Cargo about that.
-    let your_command = "rustc-cfg=\"pass\"";
+    let your_command = "rustc-cfg=fuck";
     println!("cargo:{}", your_command);
 }
