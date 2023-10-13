@@ -16,20 +16,42 @@
 //
 // Execute `rustlings hint quiz3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
-pub struct ReportCard {
-    pub grade: f32,
-    pub student_name: String,
-    pub student_age: u8,
+
+trait Grade{
+    fn display(&self)-> String;
 }
 
-impl ReportCard {
-    pub fn print(&self) -> String {
-        format!("{} ({}) - achieved a grade of {}",
-            &self.student_name, &self.student_age, &self.grade)
+struct NumericalGrade(f32);
+struct AlphabeticalGrade(String);
+
+impl Grade for NumericalGrade{
+    fn display(&self)->String{
+        self.0.clone().to_string()
     }
 }
+
+impl Grade for AlphabeticalGrade{
+    fn display(&self)->String{
+        self.0.clone()
+    }
+}
+
+
+struct ReportCard<T: Grade> {
+    grade: T,
+    student_name: String,
+    student_age: u8,
+}
+
+impl<T: Grade> ReportCard<T> {
+    pub fn print(&self) -> String {
+        format!("{} ({}) - achieved a grade of {}",
+            &self.student_name, &self.student_age, &self.grade.display())
+    }
+
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -38,9 +60,9 @@ mod tests {
     #[test]
     fn generate_numeric_report_card() {
         let report_card = ReportCard {
-            grade: 2.1,
+            grade: NumericalGrade(2.1),
             student_name: "Tom Wriggle".to_string(),
-            student_age: 12,
+            student_age: 12
         };
         assert_eq!(
             report_card.print(),
@@ -52,9 +74,9 @@ mod tests {
     fn generate_alphabetic_report_card() {
         // TODO: Make sure to change the grade here after you finish the exercise.
         let report_card = ReportCard {
-            grade: 2.1,
+            grade: AlphabeticalGrade(String::from("A+")),
             student_name: "Gary Plotter".to_string(),
-            student_age: 11,
+            student_age: 11
         };
         assert_eq!(
             report_card.print(),
